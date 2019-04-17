@@ -1,0 +1,309 @@
+package com.zgx.bootdemo.dao.impl;
+
+import com.zgx.bootdemo.dao.BaseDao.bak;
+import com.zgx.bootdemo.entity.Page;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+
+import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+@Repository
+public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao.bak {
+
+
+    @Resource(name = "sessionFactory")
+    public  void setSuperSessionFactory(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
+
+
+    @Override
+    public <T> boolean add(T entity) throws Exception {
+        boolean bool = false;
+        try {
+            assert this.getHibernateTemplate() != null;
+            Serializable ser = this.getHibernateTemplate().save(entity);
+            if (ser != null) bool = true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return bool;
+    }
+
+    @Override
+    public <T> String addStringKey(T entity) throws Exception {
+        String id = null;
+        try {
+            assert this.getHibernateTemplate() != null;
+            id = (String) this.getHibernateTemplate().save(entity);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return id;
+    }
+
+    @Override
+    public <T> Integer addNumKey(T entity) throws Exception {
+        Integer id = null;
+        try {
+            assert this.getHibernateTemplate() != null;
+            id = (Integer) this.getHibernateTemplate().save(entity);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return id;
+    }
+
+    @Override
+    public int executeData(String hql) throws Exception {
+        try {
+            assert this.getHibernateTemplate() != null;
+            return this.getHibernateTemplate().bulkUpdate(hql);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public <T> List<T> findByHql(String hql) throws Exception {
+        List<T> list = null;
+        try {
+            list = (List<T>) this.getHibernateTemplate().find(hql);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    @Override
+    public int executeBySql(String sql) throws Exception {
+        try {
+            return this.currentSession().createSQLQuery(sql).executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public <T> List<T> findBySql(String sql) throws Exception {
+        try {
+            return this.currentSession().createSQLQuery(sql).list();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public <T> boolean editEntity(T entity) throws Exception {
+        boolean bool;
+        try {
+            this.getHibernateTemplate().update(entity);
+            bool = true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return bool;
+    }
+
+    @Override
+    public boolean editHql(String hql) throws Exception {
+        boolean bool;
+        try {
+            int num = this.getHibernateTemplate().bulkUpdate(hql);
+            bool = num > 0;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return bool;
+    }
+
+    @Override
+    public int editNumHql(String hql) throws Exception {
+        int count = 0;
+        try {
+            assert this.getHibernateTemplate() != null;
+            count = this.getHibernateTemplate().bulkUpdate(hql);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return count;
+    }
+
+    @Override
+    public <T> boolean removeEntity(T entity) throws Exception {
+        boolean bool;
+        try {
+            this.getHibernateTemplate().delete(entity);
+            bool = true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return bool;
+    }
+
+    @Override
+    public <T> T getById(Class<T> clazz, int id) throws Exception {
+        T t = null;
+        try {
+            assert this.getHibernateTemplate() != null;
+            t = (T) this.getHibernateTemplate().get(clazz, id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return t;
+    }
+
+    @Override
+    public <T> T getById(Class<T> clazz, String id) throws Exception {
+        T t = null;
+        try {
+            t = (T) this.getHibernateTemplate().get(clazz, id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return t;
+    }
+
+    @Override
+    public <T> T getById(Class<T> clazz, Serializable id) throws Exception {
+        T t = null;
+        try {
+            t = (T) this.getHibernateTemplate().get(clazz, id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return t;
+    }
+
+    @Override
+    public <T> T getByHql(String hql) throws Exception {
+        T t = null;
+        try {
+            t = (T) this.currentSession().createQuery(hql).setMaxResults(1).uniqueResult();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return t;
+    }
+
+    @Override
+    public <T> List<T> getList(String hql) throws Exception {
+        List<T> list = null;
+        try {
+            list = (List<T>) this.getHibernateTemplate().find(hql);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    @Override
+    public boolean remove(String hql) throws Exception {
+        boolean bool = false;
+        try {
+            bool = this.executeBySql(hql) > 0;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return bool;
+    }
+
+    @Override
+    public <T> List<T> getList(Class<T> clazz) throws Exception {
+        List<?> list;
+        try {
+            list = this.getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(clazz));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return (List<T>) list;
+    }
+
+    @Override
+    public <T> List<T> getList(String hql, Object[] obj) throws Exception {
+        List<T> list;
+        try {
+            list = (List<T>) this.getHibernateTemplate().find(hql, obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<?> showPage(String queryHql, String queryCountHql, int firstResult, int maxResult) throws Exception {
+        List<Object> list = new ArrayList<Object>();
+        try {
+            Session session = this.currentSession();
+            list.add(session.createQuery(queryHql).setFirstResult(firstResult).setMaxResults(maxResult).list());
+            list.add(session.createQuery(queryCountHql).setFirstResult(firstResult).uniqueResult());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    @Override
+    public <T> List<T> showPage(String queryHql, String queryCountHql, Page<T> page) throws Exception {
+        try {
+            Session session = this.currentSession();
+            page.setList(session.createQuery(queryHql).setFirstResult(page.getCunrrentPage())
+                    .setMaxResults(page.getPageSize()).list());
+            page.setTotalCount(Integer.parseInt(session.createQuery(queryCountHql).setMaxResults(1).uniqueResult()
+                    .toString()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return page.getList();
+    }
+
+    @Override
+    public List<?> showPage(String queryHql, DetachedCriteria criteria, int firstResult, int maxResult)
+            throws Exception {
+        List<Object> list = new ArrayList<Object>();
+        try {
+            Session session = this.currentSession();
+            list.add(this.getHibernateTemplate().findByCriteria(criteria, firstResult, maxResult));
+            list.add(session.createQuery(queryHql).setMaxResults(1).uniqueResult());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    @Override
+    public <T> List<T> showPage(String queryHql, DetachedCriteria criteria, Page<T> page) throws Exception {
+        try {
+            Session session = this.currentSession();
+            page.setList((List<T>) this.getHibernateTemplate().findByCriteria(criteria, page.getCunrrentPage(),
+                    page.getPageSize()));
+            page.setTotalCount(Integer.parseInt(session.createQuery(queryHql).setMaxResults(1).uniqueResult()
+                    .toString()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return page.getList();
+    }
+
+    @Override
+    public <T> List<?> find(DetachedCriteria criteria) throws Exception {
+        List<?> list = null;
+        try {
+            assert this.getHibernateTemplate() != null;
+            list = this.getHibernateTemplate().findByCriteria(criteria);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+
+}
