@@ -2,7 +2,9 @@ package com.zgx.bootdemo.dao.impl;
 
 import com.zgx.bootdemo.dao.BankDao;
 import com.zgx.bootdemo.entity.Bank;
+import com.zgx.bootdemo.entity.Customer;
 import org.hibernate.*;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,6 +41,12 @@ public class BankDaoImpl implements BankDao {
                 e.printStackTrace();
             }
         }
+        return criteria.list();
+    }
+
+    @Override
+    public List list() {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Customer.class);
         return criteria.list();
     }
 

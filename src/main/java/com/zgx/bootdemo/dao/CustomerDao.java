@@ -1,6 +1,7 @@
 package com.zgx.bootdemo.dao;
 
 import com.zgx.bootdemo.entity.Customer;
+import com.zgx.bootdemo.entity.Page;
 
 import java.util.List;
 
@@ -30,8 +31,22 @@ public interface CustomerDao {
      * @param customer 1
      * @return : java.util.List
      */
+    @Deprecated
     List list(Customer customer);
-    
+
+
+    /**
+     * @author zhouguixing
+     * @date 2019/4/18 9:31
+     * @description 按关键词（代码、助记码、名称）分页查询
+     *
+     * @param keyword 1
+     * @param startIndex 2
+     * @param size 3
+     * @return : java.util.List
+     */
+    List<Customer> listPage(String keyword,int startIndex,int size);
+
     /**
      * @author zhouguixing
      * @date 2019/4/17 17:17
@@ -51,6 +66,16 @@ public interface CustomerDao {
      * @return : int
      */
     int count(Customer customer);
+    
+    /**
+     * @author zhouguixing
+     * @date 2019/4/18 9:57
+     * @description 根据关键字查询客户数量
+     *
+     * @param keyword 1
+     * @return : int
+     */
+    int count(String keyword);
 
     /**
      * @author zhouguixing

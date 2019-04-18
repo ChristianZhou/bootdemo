@@ -22,6 +22,11 @@ public class BankSerivceImpl implements BankSerivce {
     }
 
     @Override
+    public List listBank() {
+        return bankDao.list();
+    }
+
+    @Override
     @Transactional
     public List listBank(Bank bank) {
         return bankDao.list(bank);

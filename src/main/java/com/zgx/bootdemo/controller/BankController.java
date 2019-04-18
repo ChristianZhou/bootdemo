@@ -23,7 +23,7 @@ public class BankController {
     /**
      * @author zhouguixing
      * @date 2019/4/17 14:45
-     * @description 
+     * @description  根据主键查询银行信息
      *
      * @param bankCode 1
      * @return : com.zgx.bootdemo.entity.Bank
@@ -38,13 +38,29 @@ public class BankController {
     /**
      * @author zhouguixing
      * @date 2019/4/17 10:31
-     * @description 根据实体类参数属性查询银行列表，为空的属性忽略
+     * @description 查询所有银行列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/bank/list", method = RequestMethod.GET)
+    public List listBank() {
+        return bankSerivce.listBank();
+    }
+
+    /**
+     * @author zhouguixing
+     * @date 2019/4/18 13:42
+     * @description 根据关键字（名称）查询银行信息
+     *
+     * @param bank 1
+     * @return : java.util.List
      */
     @ResponseBody
     @RequestMapping(value = "/bank/list", method = RequestMethod.POST)
     public List listBank(@RequestBody Bank bank) {
         return bankSerivce.listBank(bank);
     }
+
+
 
     /**
      * @author zhouguixing

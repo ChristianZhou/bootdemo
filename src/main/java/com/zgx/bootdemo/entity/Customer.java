@@ -192,5 +192,4 @@ public class Customer implements Serializable {
   public void setMonthlySettlementDate(java.sql.Date monthlySettlementDate) {
     this.monthlySettlementDate = monthlySettlementDate;
   }
-
 }

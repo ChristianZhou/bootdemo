@@ -29,7 +29,17 @@ public interface BankDao{
      * @param bank 1
      * @return : java.util.List
      */
+    @Deprecated
     List list(Bank bank);
+
+    /**
+     * @author zhouguixing
+     * @date 2019/4/18 13:40
+     * @description 查询银行列表
+     *
+     * @return : java.util.List
+     */
+    List list();
 
     /**
      * @author zhouguixing

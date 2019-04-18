@@ -1,6 +1,7 @@
 package com.zgx.bootdemo.service;
 
 import com.zgx.bootdemo.entity.Customer;
+import com.zgx.bootdemo.entity.Page;
 
 import java.util.List;
 
@@ -29,7 +30,20 @@ public interface CustomerSerivce {
      * @param customer 1
      * @return : java.util.List
      */
+    @Deprecated
     List listCustomer(Customer customer);
+
+    /**
+     * @author zhouguixing
+     * @date 2019/4/18 9:53
+     * @description 按关键词（代码、助记码、名称）分页查询
+     *
+     * @param keyword 1
+     * @param pageNum 2
+     * @param pageSize 3
+     * @return : com.zgx.bootdemo.entity.Page<com.zgx.bootdemo.entity.Customer>
+     */
+    Page<Customer> listPageCustomer(String keyword,int pageNum,int pageSize);
 
     /**
      * @author zhouguixing

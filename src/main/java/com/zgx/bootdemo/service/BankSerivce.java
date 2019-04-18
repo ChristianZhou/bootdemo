@@ -29,7 +29,17 @@ public interface BankSerivce {
      * @param bank 1
      * @return : java.util.List
      */
+    @Deprecated
     List listBank(Bank bank);
+
+    /**
+     * @author zhouguixing
+     * @date 2019/4/18 13:45
+     * @description 查询所有银行列表
+     *
+     * @return : java.util.List
+     */
+    List listBank();
 
     /**
      * @author zhouguixing

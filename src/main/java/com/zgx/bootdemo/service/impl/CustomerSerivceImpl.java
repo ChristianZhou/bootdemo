@@ -2,6 +2,7 @@ package com.zgx.bootdemo.service.impl;
 
 import com.zgx.bootdemo.dao.CustomerDao;
 import com.zgx.bootdemo.entity.Customer;
+import com.zgx.bootdemo.entity.Page;
 import com.zgx.bootdemo.service.CustomerSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,21 @@ public class CustomerSerivceImpl implements CustomerSerivce {
     @Transactional
     public List listCustomer(Customer customer) {
         return customerDao.list(customer);
+    }
+
+    @Override
+    @Transactional
+    public Page<Customer> listPageCustomer(String keyword, int pageNum, int pageSize) {
+        int startIndex = 0;
+        int total = customerDao.count(keyword);
+        startIndex = (pageNum-1)*pageSize;
+        List<Customer> list = customerDao.listPage(keyword, startIndex, pageSize);
+        Page<Customer> customerPage = new Page<>();
+        customerPage.setList(list);
+        customerPage.setPageNum(pageNum);
+        customerPage.setPageSize(pageSize);
+        customerPage.setTotalPage(total);
+        return customerPage;
     }
 
 

@@ -2,7 +2,11 @@ package com.zgx.bootdemo.dao.impl;
 
 import com.zgx.bootdemo.dao.CustomerDao;
 import com.zgx.bootdemo.entity.Customer;
+import com.zgx.bootdemo.entity.Page;
 import org.hibernate.*;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -61,6 +65,17 @@ public class CustomerDaoImp implements CustomerDao {
     }
 
     @Override
+    public List listPage(String keyword, int startIndex, int size) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Customer.class);
+        Disjunction dis = Restrictions.disjunction();
+        dis.add(Restrictions.like("custCode","%"+keyword+"%"));
+        dis.add(Restrictions.like("custName","%"+keyword+"%"));
+        dis.add(Restrictions.like("mnemonicCode","%"+keyword+"%"));
+        criteria.add(dis).setFirstResult(startIndex).setMaxResults(size);
+        return criteria.list();
+    }
+
+    @Override
     public void save(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
@@ -90,6 +105,30 @@ public class CustomerDaoImp implements CustomerDao {
     }
 
     @Override
+    public int count(String keyword) {
+//        Session currentSession = sessionFactory.getCurrentSession();
+//        StringBuilder hql = new StringBuilder(" select count(1) from Customer where ");
+//        StringBuilder hqlCustomerCount = new StringBuilder();
+//        String[] keyColumns = {
+//                "custCode","custName","mnemonicCode"};
+//        for (String keyColumn: keyColumns) {
+//            hql.append(" or ").append(keyColumn).append(" like ").append(keyword);
+//        }
+//        Query query = currentSession.createQuery(hql.toString());
+//
+//        String count = query.uniqueResult().toString();
+//        return Integer.parseInt(count);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Customer.class);
+        Disjunction dis = Restrictions.disjunction();
+        dis.add(Restrictions.like("custCode","%"+keyword+"%"));
+        dis.add(Restrictions.like("custName","%"+keyword+"%"));
+        dis.add(Restrictions.like("mnemonicCode","%"+keyword+"%"));
+        criteria.add(dis);
+        criteria.setProjection(Projections.rowCount());
+        return Integer.parseInt(criteria.uniqueResult().toString());
+    }
+
+    @Override
     public void remove(String custCode) {
         Session session = sessionFactory.getCurrentSession();
         Customer customer = session.get(Customer.class, custCode);
@@ -98,34 +137,33 @@ public class CustomerDaoImp implements CustomerDao {
 
     @Override
     public void update(Customer customer) {
+//        Session session = sessionFactory.getCurrentSession();
+//        StringBuilder hql = new StringBuilder(" update Customer ");
+//        StringBuilder hqlSet = new StringBuilder(" set ");
+//        String hqlWhere = " where custCode = " + "'" + customer.getCustCode() + "'";
+//        for (Field field : customer.getClass().getDeclaredFields()) {
+//            field.setAccessible(true);
+//            try {
+//                Object o = field.get(customer);
+//                String name = field.getName();
+//                if (o != null) {
+//                    hqlSet.append(name).append(" = ").append("'").append(o.toString()).append("'").append(" , ");
+//                }
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        System.out.println(hqlSet.toString());
+//        hqlSet.delete(hqlSet.lastIndexOf(" , "), hqlSet.length() - 1);
+//        System.out.println(hqlSet.toString());
+//
+//        String hqlFinal = hql.append(hqlSet).append(hqlWhere).toString();
+//        System.out.println(hqlFinal);
+//        Query query = session.createQuery(hqlFinal);
+//        query.executeUpdate();
+
+
         Session session = sessionFactory.getCurrentSession();
-        StringBuilder hql = new StringBuilder(" update Customer ");
-        StringBuilder hqlSet = new StringBuilder(" set ");
-        String hqlWhere = " where custCode = " + "'" + customer.getCustCode() + "'";
-        for (Field field : customer.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
-            try {
-                Object o = field.get(customer);
-                String name = field.getName();
-                if (o != null) {
-                    hqlSet.append(name).append(" = ").append("'").append(o.toString()).append("'").append(" , ");
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println(hqlSet.toString());
-        hqlSet.delete(hqlSet.lastIndexOf(" , "), hqlSet.length() - 1);
-        System.out.println(hqlSet.toString());
-
-        String hqlFinal = hql.append(hqlSet).append(hqlWhere).toString();
-        System.out.println(hqlFinal);
-        Query query = session.createQuery(hqlFinal);
-
-
-        query.executeUpdate();
-//        Customer custDB = session.get(Customer.class, customer.getCustCode());
-//        custDB.setAddress(customer.getAddress());
-//        session.update(custDB);
+        session.update(customer);
     }
 }

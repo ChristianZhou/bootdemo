@@ -1,6 +1,8 @@
 package com.zgx.bootdemo.controller;
 
 import com.zgx.bootdemo.entity.Customer;
+import com.zgx.bootdemo.entity.KeywordPage;
+import com.zgx.bootdemo.entity.Page;
 import com.zgx.bootdemo.service.CustomerSerivce;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +42,31 @@ public class CustomerController {
     @RequestMapping(value = "/customer/list",method = RequestMethod.POST)
     public List listCustomer(@RequestBody Customer customer) {
         return customerSerivce.listCustomer(customer);
+    }
+
+    /**
+     * @author zhouguixing
+     * @date 2019/4/18 13:17
+     * @description 根据关键字、分页信息（页码、页面大小），查询客户列表
+     *
+     * @param keywordPage 1
+     * @return : com.zgx.bootdemo.entity.Page<com.zgx.bootdemo.entity.Customer>
+     */
+    @ResponseBody
+    @RequestMapping(value = "/customer/listPage",method = RequestMethod.POST)
+    public Page<Customer> listPageCustomer(@RequestBody KeywordPage keywordPage) {
+        String keyword = keywordPage.getKeyword();
+
+        Page page = keywordPage.getPage();
+        int pageNum =1;
+        int pageSize = 10;
+        if (page != null) {
+            if (page.getPageNum() != null)
+                pageNum=page.getPageNum();
+            if (page.getPageSize() != null)
+                pageSize = page.getPageSize();
+        }
+        return customerSerivce.listPageCustomer(keyword, pageNum, pageSize);
     }
 
     /**
