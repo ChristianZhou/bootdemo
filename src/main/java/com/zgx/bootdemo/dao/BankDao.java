@@ -19,18 +19,7 @@ public interface BankDao{
      * @param id 1
      * @return : com.zgx.bootdemo.entity.Bank
      */
-    Bank read(String id);
-
-    /**
-     * @author zhouguixing
-     * @date 2019/4/17 16:51
-     * @description 根据实体类查询列表
-     *
-     * @param bank 1
-     * @return : java.util.List
-     */
-    @Deprecated
-    List list(Bank bank);
+    Bank read(String id) throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -39,7 +28,7 @@ public interface BankDao{
      *
      * @return : java.util.List
      */
-    List list();
+    List list() throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -49,17 +38,7 @@ public interface BankDao{
      * @param bank 1
      * @return : void
      */
-    void save(Bank bank);
-
-    /**
-     * @author zhouguixing
-     * @date 2019/4/17 16:55
-     * @description 根据实体类统计银行总数
-     *
-     * @param bank 1
-     * @return : int
-     */
-    int count(Bank bank);
+    void save(Bank bank) throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -69,18 +48,17 @@ public interface BankDao{
      * @param bankCode 1
      * @return : void
      */
-    void remove( String bankCode);
-
+    void delete( String bankCode) throws RuntimeException;
+    
     /**
      * @author zhouguixing
-     * @date 2019/4/17 16:57
+     * @date 2019/4/19 11:15
      * @description 修改银行信息
      *
-     * @param bankCode 1
-     * @param bankName 2
+     * @param bank 1
      * @return : void
      */
-    void update(String bankCode,String bankName);
+    void update(Bank bank) throws RuntimeException;
 
 
 }

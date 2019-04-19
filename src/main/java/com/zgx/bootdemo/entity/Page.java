@@ -10,7 +10,7 @@ import java.util.List;
 public class Page<T> {
     private Integer pageNum;//页码
     private Integer pageSize;//页面大小
-    private Integer totalPage;//总页数
+    private Long totalSize;//总记录数
     private List<T> list;//列表
 
     public Integer getPageNum() {
@@ -29,12 +29,12 @@ public class Page<T> {
         this.pageSize = pageSize;
     }
 
-    public Integer getTotalPage() {
-        return totalPage;
+    public Long getTotalSize() {
+        return totalSize;
     }
 
-    public void setTotalPage(Integer totalPage) {
-        this.totalPage = totalPage;
+    public void setTotalSize(Long totalSize) {
+        this.totalSize = totalSize;
     }
 
     public List<T> getList() {

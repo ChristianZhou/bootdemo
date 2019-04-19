@@ -24,17 +24,6 @@ public interface CustomerSerivce {
 
     /**
      * @author zhouguixing
-     * @date 2019/4/17 17:02
-     * @description 根据实体类查询用户列表
-     *
-     * @param customer 1
-     * @return : java.util.List
-     */
-    @Deprecated
-    List listCustomer(Customer customer);
-
-    /**
-     * @author zhouguixing
      * @date 2019/4/18 9:53
      * @description 按关键词（代码、助记码、名称）分页查询
      *
@@ -45,25 +34,16 @@ public interface CustomerSerivce {
      */
     Page<Customer> listPageCustomer(String keyword,int pageNum,int pageSize);
 
-    /**
-     * @author zhouguixing
-     * @date 2019/4/17 17:02
-     * @description 根据实体类查询用户数量
-     *
-     * @param customer 1
-     * @return : java.lang.Integer
-     */
-    Integer countCustomer(Customer customer);
 
     /**
      * @author zhouguixing
-     * @date 2019/4/17 17:03
-     * @description 新增用户
+     * @date 2019/4/19 13:40
+     * @description 新增客户
      *
      * @param customer 1
-     * @return : java.lang.Boolean
+     * @return : void
      */
-    Boolean saveCustomer(Customer customer);
+    void saveCustomer(Customer customer);
 
     /**
      * @author zhouguixing

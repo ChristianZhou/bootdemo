@@ -23,17 +23,6 @@ public interface BankSerivce {
 
     /**
      * @author zhouguixing
-     * @date 2019/4/17 16:49
-     * @description 根据实体类查询银行列表
-     *
-     * @param bank 1
-     * @return : java.util.List
-     */
-    @Deprecated
-    List listBank(Bank bank);
-
-    /**
-     * @author zhouguixing
      * @date 2019/4/18 13:45
      * @description 查询所有银行列表
      *
@@ -43,23 +32,13 @@ public interface BankSerivce {
 
     /**
      * @author zhouguixing
-     * @date 2019/4/17 16:49
-     * @description 统计某类银行数量
-     *
-     * @param bank 1
-     * @return : java.lang.Integer
-     */
-    Integer countBank(Bank bank);
-
-    /**
-     * @author zhouguixing
-     * @date 2019/4/17 16:50
+     * @date 2019/4/19 13:39
      * @description 新增银行
      *
      * @param bank 1
-     * @return : java.lang.Boolean
+     * @return : void
      */
-    Boolean saveBank(Bank bank);
+    void saveBank(Bank bank);
 
     /**
      * @author zhouguixing

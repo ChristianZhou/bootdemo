@@ -3,6 +3,8 @@ package com.zgx.bootdemo.service.impl;
 import com.zgx.bootdemo.dao.BankDao;
 import com.zgx.bootdemo.entity.Bank;
 import com.zgx.bootdemo.service.BankSerivce;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,13 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service(value = "bankSerivceImpl")
+@Transactional
 public class BankSerivceImpl implements BankSerivce {
+
+    private Logger logger = LoggerFactory.getLogger(BankSerivceImpl.class);
 
     @Autowired
     private  BankDao bankDao;
 
     @Override
-    @Transactional
     public Bank readBank(String bankCode) {
         return bankDao.read(bankCode);
     }
@@ -27,39 +31,33 @@ public class BankSerivceImpl implements BankSerivce {
     }
 
     @Override
-    @Transactional
-    public List listBank(Bank bank) {
-        return bankDao.list(bank);
-    }
-
-    @Override
-    @Transactional
-    public Integer countBank(Bank bank) {
-        return bankDao.count(bank);
-    }
-
-    @Override
-    @Transactional
-    public Boolean saveBank(Bank bank) {
-        boolean flag = true;
-        if (bankDao.read(bank.getBankCode()) == null) {
+    public void saveBank(Bank bank) {
+        try {
             bankDao.save(bank);
-        }else {
-            flag=false;
+        } catch (Exception e) {
+            logger.error("--------------------新增银行出现异常--------------------");
+            throw new RuntimeException();
         }
-        return flag;
     }
 
     @Override
-    @Transactional
     public void removeBank(String bankCode) {
-        bankDao.remove(bankCode);
+        try {
+            bankDao.delete(bankCode);
+        } catch (Exception e) {
+            logger.error("--------------------删除银行信息出现异常--------------------");
+            throw new RuntimeException();
+        }
     }
 
     @Override
-    @Transactional
     public void updateBank(Bank bank) {
-        bankDao.update(bank.getBankCode(),bank.getBankName());
+        try {
+            bankDao.update(bank);
+        } catch (Exception e) {
+            logger.error("--------------------修改银行信息出现异常--------------------");
+            throw new RuntimeException();
+        }
     }
 
 }

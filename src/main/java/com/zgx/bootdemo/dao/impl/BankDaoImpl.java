@@ -2,14 +2,13 @@ package com.zgx.bootdemo.dao.impl;
 
 import com.zgx.bootdemo.dao.BankDao;
 import com.zgx.bootdemo.entity.Bank;
-import com.zgx.bootdemo.entity.Customer;
-import org.hibernate.*;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -24,74 +23,33 @@ public class BankDaoImpl implements BankDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Bank read(String id) {
+    public Bank read(String id) throws RuntimeException {
         return sessionFactory.getCurrentSession().get(Bank.class, id);
     }
 
     @Override
-    public List list(Bank bank) {
+    public List list() throws RuntimeException {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Bank.class);
-        for(Field field : bank.getClass().getDeclaredFields()){
-            field.setAccessible(true);
-            try {
-                Object o = field.get(bank);
-                String name = field.getName();
-                if (o != null) criteria.add(Restrictions.like(name, o));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
         return criteria.list();
     }
 
     @Override
-    public List list() {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Customer.class);
-        return criteria.list();
-    }
-
-    @Override
-    public void save(Bank bank) {
+    public void save(Bank bank) throws RuntimeException {
         Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        transaction.begin();
         session.save(bank);
-        transaction.commit();
     }
 
     @Override
-    public int count(Bank bank) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        StringBuilder hql = new StringBuilder(" select count(1) as count from Bank    where 1=1 ");
-        for (Field field : bank.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
-            try {
-                Object o = field.get(bank);
-                String name = field.getName();
-                if (o != null) hql.append(" and ").append(name).append(" = ").append(o.toString());
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        Query query = currentSession.createQuery(hql.toString());
-        String count = query.uniqueResult().toString();
-        return Integer.parseInt(count);
-    }
-
-    @Override
-    public void remove(String bankCode) {
+    public void delete(String bankCode) throws RuntimeException {
         Session session = sessionFactory.getCurrentSession();
-        Bank bank = session.get(Bank.class, bankCode);
-        if(bank !=null)session.delete(bank);
+        Query query = session.createQuery("delete from Bank where bankCode=? ");
+        query.setString(0, bankCode);
+        query.executeUpdate();
     }
 
     @Override
-    public void update(String bankCode, String bankName) {
+    public void update(Bank bank) throws RuntimeException {
         Session session = sessionFactory.getCurrentSession();
-        Bank bank = new Bank();
-        bank.setBankCode(bankCode);
-        bank.setBankName(bankName);
         session.update(bank);
     }
-
 }

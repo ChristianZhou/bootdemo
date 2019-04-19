@@ -4,6 +4,8 @@ import com.zgx.bootdemo.dao.CustomerDao;
 import com.zgx.bootdemo.entity.Customer;
 import com.zgx.bootdemo.entity.Page;
 import com.zgx.bootdemo.service.CustomerSerivce;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,69 +13,61 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service(value = "customerSerivce")
+@Transactional
 public class CustomerSerivceImpl implements CustomerSerivce {
 
     @Autowired
     private CustomerDao customerDao;
 
+    private Logger logger = LoggerFactory.getLogger(CustomerSerivceImpl.class);
+    
 
     @Override
-    @Transactional
-    public Customer getCustomer(String custCode) throws Exception {
+    public Customer getCustomer(String custCode){
         return customerDao.read(custCode);
     }
 
     @Override
-    @Transactional
-    public List listCustomer(Customer customer) {
-        return customerDao.list(customer);
-    }
-
-    @Override
-    @Transactional
     public Page<Customer> listPageCustomer(String keyword, int pageNum, int pageSize) {
         int startIndex = 0;
-        int total = customerDao.count(keyword);
+        Long total = customerDao.count(keyword);
         startIndex = (pageNum-1)*pageSize;
-        List<Customer> list = customerDao.listPage(keyword, startIndex, pageSize);
+        List list = customerDao.listPage(keyword, startIndex, pageSize);
         Page<Customer> customerPage = new Page<>();
         customerPage.setList(list);
         customerPage.setPageNum(pageNum);
         customerPage.setPageSize(pageSize);
-        customerPage.setTotalPage(total);
+        customerPage.setTotalSize(total);
         return customerPage;
     }
 
-
     @Override
-    @Transactional
-    public Integer countCustomer(Customer customer) {
-        return customerDao.count(customer);
-    }
-
-
-    @Override
-    @Transactional
-    public Boolean saveCustomer(Customer customer) {
-        boolean flag = true;
+    public void saveCustomer(Customer customer) {
         try {
             customerDao.save(customer);
         } catch (Exception e) {
-            e.printStackTrace();
-            flag=false;
+            logger.error("--------------------新增客户出现异常--------------------");
+            throw new RuntimeException();
         }
-        return flag;
     }
 
     @Override
-    @Transactional
-    public void removeCustomer(String customerId) throws Exception {
-        customerDao.remove(customerId);
+    public void removeCustomer(String customerId) {
+        try {
+            customerDao.delete(customerId);
+        } catch (RuntimeException e) {
+            logger.error("--------------------删除客户出现异常--------------------");
+            throw new RuntimeException();
+        }
     }
 
     @Override
-    @Transactional
     public void updateCustomer(Customer customer) {
-        customerDao.update(customer);
+        try {
+            customerDao.update(customer);
+        } catch (RuntimeException e) {
+            logger.error("--------------------修改客户信息出现异常--------------------");
+            throw new RuntimeException();
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.zgx.bootdemo.controller;
 
 import com.zgx.bootdemo.entity.Bank;
 import com.zgx.bootdemo.service.BankSerivce;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @RestController
 public class BankController {
 
-    @Resource(name = "bankSerivceImpl")
+    @Autowired
     private BankSerivce bankSerivce;
 
     /**
@@ -48,43 +49,14 @@ public class BankController {
 
     /**
      * @author zhouguixing
-     * @date 2019/4/18 13:42
-     * @description 根据关键字（名称）查询银行信息
-     *
-     * @param bank 1
-     * @return : java.util.List
-     */
-    @ResponseBody
-    @RequestMapping(value = "/bank/list", method = RequestMethod.POST)
-    public List listBank(@RequestBody Bank bank) {
-        return bankSerivce.listBank(bank);
-    }
-
-
-
-    /**
-     * @author zhouguixing
-     * @date 2019/4/17 10:32
-     * @description 根据实体类参数属性查询银行总数，为空的属性忽略
-     */
-    @ResponseBody
-    @RequestMapping(value = "/bank/count", method = RequestMethod.GET)
-    public int countBank() {
-        return bankSerivce.countBank(new Bank());
-    }
-
-
-    /**
-     * @author zhouguixing
      * @date 2019/4/17 10:32
      * @description 添加银行信息，主键为后端自动生成的UUID
      */
     @ResponseBody
     @RequestMapping(value = "/bank", method = RequestMethod.POST)
-    public String saveBank(@RequestBody Bank bank) {
+    public void saveBank(@RequestBody Bank bank) {
         bank.setBankCode(UUID.randomUUID().toString());
-        boolean flag = bankSerivce.saveBank(bank);
-        return flag ? "添加成功" : "添加失败";
+        bankSerivce.saveBank(bank);
     }
 
 

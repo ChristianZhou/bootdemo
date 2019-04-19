@@ -1,7 +1,6 @@
 package com.zgx.bootdemo.dao;
 
 import com.zgx.bootdemo.entity.Customer;
-import com.zgx.bootdemo.entity.Page;
 
 import java.util.List;
 
@@ -21,19 +20,7 @@ public interface CustomerDao {
      * @param custCode 1
      * @return : com.zgx.bootdemo.entity.Customer
      */
-    Customer read(String custCode);
-
-    /**
-     * @author zhouguixing
-     * @date 2019/4/17 17:16
-     * @description 根据实体类查询客户列表
-     *
-     * @param customer 1
-     * @return : java.util.List
-     */
-    @Deprecated
-    List list(Customer customer);
-
+    Customer read(String custCode) throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -45,7 +32,7 @@ public interface CustomerDao {
      * @param size 3
      * @return : java.util.List
      */
-    List<Customer> listPage(String keyword,int startIndex,int size);
+    List listPage(String keyword,int startIndex,int size) throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -55,18 +42,8 @@ public interface CustomerDao {
      * @param customer 1
      * @return : void
      */
-    void save(Customer customer);
+    void save(Customer customer) throws RuntimeException;
 
-    /**
-     * @author zhouguixing
-     * @date 2019/4/17 17:17
-     * @description 根据实体类查询客户数量
-     *
-     * @param customer 1
-     * @return : int
-     */
-    int count(Customer customer);
-    
     /**
      * @author zhouguixing
      * @date 2019/4/18 9:57
@@ -75,7 +52,7 @@ public interface CustomerDao {
      * @param keyword 1
      * @return : int
      */
-    int count(String keyword);
+    Long count(String keyword) throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -85,7 +62,7 @@ public interface CustomerDao {
      * @param custCode 1
      * @return : void
      */
-    void remove(String custCode);
+    void delete(String custCode) throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -95,5 +72,5 @@ public interface CustomerDao {
      * @param customer 1
      * @return : void
      */
-    void update(Customer customer);
+    void update(Customer customer) throws RuntimeException;
 }
