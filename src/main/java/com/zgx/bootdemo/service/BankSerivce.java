@@ -19,7 +19,7 @@ public interface BankSerivce {
      * @param bankCode 1
      * @return : com.zgx.bootdemo.entity.Bank
      */
-    Bank readBank(String bankCode);
+    Bank readBank(String bankCode) ;
 
     /**
      * @author zhouguixing

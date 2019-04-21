@@ -13,6 +13,8 @@ import java.io.Serializable;
 @Table(name = "bank")
 public class Bank implements Serializable {
 
+
+  private static final long serialVersionUID = -1826205236201593454L;
   @Id
   private String bankCode;//主键、银行代码
   @Column

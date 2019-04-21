@@ -5,6 +5,7 @@ import com.zgx.bootdemo.entity.KeywordPage;
 import com.zgx.bootdemo.entity.Page;
 import com.zgx.bootdemo.service.CustomerSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -15,7 +16,7 @@ import java.util.UUID;
  * @date 2019/4/16 18:41
  * @description 客户信息Controller
  */
-@RestController
+@Controller
 public class CustomerController {
 
     @Autowired
