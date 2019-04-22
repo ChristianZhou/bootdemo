@@ -23,26 +23,25 @@ public class CustomerSerivceImpl implements CustomerSerivce {
     
 
     @Override
-    public Customer getCustomer(String custCode){
+    public Customer read(String custCode){
         return customerDao.read(custCode);
     }
 
     @Override
-    public Page<Customer> listPageCustomer(String keyword, int pageNum, int pageSize) {
-        int startIndex = 0;
+    public Page<Customer> listPage(String keyword, int offset, int limit,String orderKey) {
         Long total = customerDao.count(keyword);
-        startIndex = (pageNum-1)*pageSize;
-        List list = customerDao.listPage(keyword, startIndex, pageSize);
-        Page<Customer> customerPage = new Page<>();
-        customerPage.setList(list);
-        customerPage.setPageNum(pageNum);
-        customerPage.setPageSize(pageSize);
-        customerPage.setTotalSize(total);
-        return customerPage;
+        List list = customerDao.listPage(keyword, offset, limit,orderKey);
+        Page<Customer> page = new Page<>();
+        page.setList(list);
+        page.setOffset(offset);
+        page.setLimit(limit);
+        page.setTotalSize(total);
+        page.setOrderKey(orderKey);
+        return page;
     }
 
     @Override
-    public void saveCustomer(Customer customer) {
+    public void save(Customer customer) {
         try {
             customerDao.save(customer);
         } catch (Exception e) {
@@ -52,7 +51,7 @@ public class CustomerSerivceImpl implements CustomerSerivce {
     }
 
     @Override
-    public void removeCustomer(String customerId) {
+    public void delete(String customerId) {
         try {
             customerDao.delete(customerId);
         } catch (RuntimeException e) {
@@ -62,7 +61,7 @@ public class CustomerSerivceImpl implements CustomerSerivce {
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public void update(Customer customer) {
         try {
             customerDao.update(customer);
         } catch (RuntimeException e) {

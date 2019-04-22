@@ -19,7 +19,7 @@ public interface BankSerivce {
      * @param bankCode 1
      * @return : com.zgx.bootdemo.entity.Bank
      */
-    Bank readBank(String bankCode) ;
+    Bank read(String bankCode) ;
 
     /**
      * @author zhouguixing
@@ -28,7 +28,7 @@ public interface BankSerivce {
      *
      * @return : java.util.List
      */
-    List listBank();
+    List list();
 
     /**
      * @author zhouguixing
@@ -38,7 +38,7 @@ public interface BankSerivce {
      * @param bank 1
      * @return : void
      */
-    void saveBank(Bank bank);
+    void save(Bank bank);
 
     /**
      * @author zhouguixing
@@ -48,7 +48,7 @@ public interface BankSerivce {
      * @param bankCode 1
      * @return : void
      */
-    void removeBank(String bankCode);
+    void delete(String bankCode);
 
     /**
      * @author zhouguixing
@@ -58,6 +58,6 @@ public interface BankSerivce {
      * @param bank 1
      * @return : void
      */
-    void updateBank(Bank bank);
+    void update(Bank bank);
 
 }

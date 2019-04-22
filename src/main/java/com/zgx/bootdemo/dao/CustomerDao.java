@@ -24,15 +24,16 @@ public interface CustomerDao {
 
     /**
      * @author zhouguixing
-     * @date 2019/4/18 9:31
+     * @date 2019/4/22 9:52
      * @description 按关键词（代码、助记码、名称）分页查询
      *
      * @param keyword 1
-     * @param startIndex 2
-     * @param size 3
+     * @param offSet 2
+     * @param limit 3
+     * @param orderKey 4
      * @return : java.util.List
      */
-    List listPage(String keyword,int startIndex,int size) throws RuntimeException;
+    List listPage(String keyword,int offSet,int limit,String orderKey) throws RuntimeException;
 
     /**
      * @author zhouguixing

@@ -8,25 +8,26 @@ import java.util.List;
  * @description 分页
  */
 public class Page<T> {
-    private Integer pageNum;//页码
-    private Integer pageSize;//页面大小
+    private Integer offset;//起始码
+    private Integer limit;//记录数
     private Long totalSize;//总记录数
     private List<T> list;//列表
+    private String orderKey;
 
-    public Integer getPageNum() {
-        return pageNum;
+    public Integer getOffset() {
+        return offset;
     }
 
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
-    public Integer getPageSize() {
-        return pageSize;
+    public Integer getLimit() {
+        return limit;
     }
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
     public Long getTotalSize() {
@@ -43,5 +44,13 @@ public class Page<T> {
 
     public void setList(List<T> list) {
         this.list = list;
+    }
+
+    public String getOrderKey() {
+        return orderKey;
+    }
+
+    public void setOrderKey(String orderKey) {
+        this.orderKey = orderKey;
     }
 }

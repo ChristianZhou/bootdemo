@@ -20,19 +20,19 @@ public interface CustomerSerivce {
      * @param custCode 1
      * @return : com.zgx.bootdemo.entity.Customer
      */
-    Customer getCustomer(String custCode) throws Exception;
+    Customer read(String custCode) throws Exception;
 
     /**
      * @author zhouguixing
-     * @date 2019/4/18 9:53
+     * @date 2019/4/22 9:47
      * @description 按关键词（代码、助记码、名称）分页查询
      *
      * @param keyword 1
-     * @param pageNum 2
-     * @param pageSize 3
+     * @param offset 2
+     * @param limit 3
      * @return : com.zgx.bootdemo.entity.Page<com.zgx.bootdemo.entity.Customer>
      */
-    Page<Customer> listPageCustomer(String keyword,int pageNum,int pageSize);
+    Page<Customer> listPage(String keyword,int offset,int limit,String orderKey);
 
 
     /**
@@ -43,7 +43,7 @@ public interface CustomerSerivce {
      * @param customer 1
      * @return : void
      */
-    void saveCustomer(Customer customer);
+    void save(Customer customer);
 
     /**
      * @author zhouguixing
@@ -53,7 +53,7 @@ public interface CustomerSerivce {
      * @param custCode 1
      * @return : void
      */
-    void removeCustomer(String custCode) throws Exception;
+    void delete(String custCode) throws Exception;
 
     /**
      * @author zhouguixing
@@ -63,6 +63,6 @@ public interface CustomerSerivce {
      * @param customer 1
      * @return : void
      */
-    void updateCustomer(Customer customer);
+    void update(Customer customer);
 
 }

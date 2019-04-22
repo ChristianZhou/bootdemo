@@ -42,8 +42,8 @@ public class BankDaoImpl implements BankDao {
     @Override
     public void delete(String bankCode) throws RuntimeException {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("delete from Bank where bankCode=? ");
-        query.setString(0, bankCode);
+        Query query = session.createQuery("delete from Bank where bankCode=:bankCode ");
+        query.setParameter("bankCode",bankCode);
         query.executeUpdate();
     }
 

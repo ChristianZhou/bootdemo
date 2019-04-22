@@ -17,6 +17,7 @@ import java.util.UUID;
  * @description 客户信息Controller
  */
 @Controller
+@RequestMapping(value = "/customer")
 public class CustomerController {
 
     @Autowired
@@ -28,9 +29,9 @@ public class CustomerController {
      * @description 根据主键查询客户信息
      */
     @ResponseBody
-    @RequestMapping(value = "/customer/{customerId}",method = RequestMethod.GET)
-    public Customer getCustomer(@PathVariable("customerId")String customerId) throws Exception {
-        return customerSerivce.getCustomer(customerId);
+    @RequestMapping(value = "/read/{customerId}",method = RequestMethod.GET)
+    public Customer read(@PathVariable("customerId")String customerId) throws Exception {
+        return customerSerivce.read(customerId);
     }
 
     /**
@@ -42,20 +43,24 @@ public class CustomerController {
      * @return : com.zgx.bootdemo.entity.Page<com.zgx.bootdemo.entity.Customer>
      */
     @ResponseBody
-    @RequestMapping(value = "/customer/listPage",method = RequestMethod.POST)
-    public Page<Customer> listPageCustomer(@RequestBody KeywordPage keywordPage) {
+    @RequestMapping(value = "/listPage",method = RequestMethod.POST)
+    public Page<Customer> listPage(@RequestBody KeywordPage keywordPage) {
         String keyword = keywordPage.getKeyword();
-
         Page page = keywordPage.getPage();
-        int pageNum =1;
-        int pageSize = 10;
+        int offset =0;
+        int limit = 10;
+        String orderKey = "";
         if (page != null) {
-            if (page.getPageNum() != null)
-                pageNum=page.getPageNum();
-            if (page.getPageSize() != null)
-                pageSize = page.getPageSize();
+            if (page.getOffset() != null)
+                offset=page.getOffset();
+            if (page.getLimit() != null)
+                limit = page.getLimit();
+            if (page.getLimit() != null)
+                limit = page.getLimit();
+            if (page.getOrderKey() != null)
+                orderKey = page.getOrderKey();
         }
-        return customerSerivce.listPageCustomer(keyword, pageNum, pageSize);
+        return customerSerivce.listPage(keyword, offset, limit,orderKey);
     }
 
     /**
@@ -64,10 +69,10 @@ public class CustomerController {
      * @description 添加客户信息
      */
     @ResponseBody
-    @RequestMapping(value = "/customer",method = RequestMethod.POST)
-    public void saveCustomer(@RequestBody Customer customer) {
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    public void save(@RequestBody Customer customer) {
         customer.setCustCode(UUID.randomUUID().toString());
-        customerSerivce.saveCustomer(customer);
+        customerSerivce.save(customer);
     }
 
     /**
@@ -76,9 +81,9 @@ public class CustomerController {
      * @description 根据主键删除客户信息
      */
     @ResponseBody
-    @RequestMapping(value = "/customer/{customerId}",method = RequestMethod.DELETE)
-    public void removeCustomer(@PathVariable("customerId")String customerId) throws Exception {
-        customerSerivce.removeCustomer(customerId);
+    @RequestMapping(value = "/delete/{customerId}",method = RequestMethod.DELETE)
+    public void delete(@PathVariable("customerId")String customerId) throws Exception {
+        customerSerivce.delete(customerId);
     }
 
     /**
@@ -87,9 +92,9 @@ public class CustomerController {
      * @description 修改客户信息
      */
     @ResponseBody
-    @RequestMapping(value = "/customer",method = RequestMethod.PUT)
-    public void updateCustomer(@RequestBody Customer customer) {
-        customerSerivce.updateCustomer(customer);
+    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    public void update(@RequestBody Customer customer) {
+        customerSerivce.update(customer);
     }
 
 }

@@ -3,9 +3,9 @@ package com.zgx.bootdemo.controller;
 import com.zgx.bootdemo.entity.Bank;
 import com.zgx.bootdemo.service.BankSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,26 +15,27 @@ import java.util.UUID;
  * @date 2019/4/16 18:40
  * @description 银行信息Controller
  */
-@RestController
+@Controller
+@RequestMapping(value = "/bank")
 public class BankController {
 
     @Autowired
     private BankSerivce bankSerivce;
 
     /**
+     * @param bankCode 1
+     *
+     * @return : com.zgx.bootdemo.entity.Bank
+     *
      * @author zhouguixing
      * @date 2019/4/17 14:45
-     * @description  根据主键查询银行信息
-     *
-     * @param bankCode 1
-     * @return : com.zgx.bootdemo.entity.Bank
+     * @description 根据主键查询银行信息
      */
     @ResponseBody
-    @RequestMapping(value = "/bank/{bankId}", method = RequestMethod.GET)
-    public Bank readBank(@PathVariable("bankId") String bankCode) {
-        return bankSerivce.readBank(bankCode);
+    @RequestMapping(value = "/read/{bankId}", method = RequestMethod.GET)
+    public Bank read(@PathVariable("bankId") String bankCode) {
+        return bankSerivce.read(bankCode);
     }
-
 
     /**
      * @author zhouguixing
@@ -42,9 +43,9 @@ public class BankController {
      * @description 查询所有银行列表
      */
     @ResponseBody
-    @RequestMapping(value = "/bank/list", method = RequestMethod.GET)
-    public List listBank() {
-        return bankSerivce.listBank();
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public List list() {
+        return bankSerivce.list();
     }
 
     /**
@@ -53,12 +54,11 @@ public class BankController {
      * @description 添加银行信息，主键为后端自动生成的UUID
      */
     @ResponseBody
-    @RequestMapping(value = "/bank", method = RequestMethod.POST)
-    public void saveBank(@RequestBody Bank bank) {
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public void save(@RequestBody Bank bank) {
         bank.setBankCode(UUID.randomUUID().toString());
-        bankSerivce.saveBank(bank);
+        bankSerivce.save(bank);
     }
-
 
     /**
      * @author zhouguixing
@@ -66,11 +66,10 @@ public class BankController {
      * @description 根据主键删除银行
      */
     @ResponseBody
-    @RequestMapping(value = "/bank/{bankId}", method = RequestMethod.DELETE)
-    public void removeBank(@PathVariable("bankId") String bankId) {
-        bankSerivce.removeBank(bankId);
+    @RequestMapping(value = "/delete/{bankId}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("bankId") String bankId) {
+        bankSerivce.delete(bankId);
     }
-
 
     /**
      * @author zhouguixing
@@ -78,10 +77,9 @@ public class BankController {
      * @description 修改银行信息
      */
     @ResponseBody
-    @RequestMapping(value = "/bank", method = RequestMethod.PUT)
-    public void updateBank(@RequestBody Bank bank) {
-        bankSerivce.updateBank(bank);
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public void update(@RequestBody Bank bank) {
+        bankSerivce.update(bank);
     }
-
 
 }

@@ -21,17 +21,17 @@ public class BankSerivceImpl implements BankSerivce {
     private  BankDao bankDao;
 
     @Override
-    public Bank readBank(String bankCode) {
+    public Bank read(String bankCode) {
         return bankDao.read(bankCode);
     }
 
     @Override
-    public List listBank() {
+    public List list() {
         return bankDao.list();
     }
 
     @Override
-    public void saveBank(Bank bank) {
+    public void save(Bank bank) {
         try {
             bankDao.save(bank);
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class BankSerivceImpl implements BankSerivce {
     }
 
     @Override
-    public void removeBank(String bankCode) {
+    public void delete(String bankCode) {
         try {
             bankDao.delete(bankCode);
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class BankSerivceImpl implements BankSerivce {
     }
 
     @Override
-    public void updateBank(Bank bank) {
+    public void update(Bank bank) {
         try {
             bankDao.update(bank);
         } catch (Exception e) {

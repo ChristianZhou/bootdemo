@@ -16,10 +16,11 @@ import java.util.HashMap;
  */
 @Configuration
 public class HttpInvokerConfig {
+
     @Autowired
     private BankSerivceImpl bankSerivceImpl;
 
-    @Bean
+    @Bean//开放service层，配置实现类、接口
     public HttpInvokerServiceExporter httpInvokerServiceExporter() {
         HttpInvokerServiceExporter httpInvokerServiceExporter = new HttpInvokerServiceExporter();
         httpInvokerServiceExporter.setService(bankSerivceImpl);
@@ -28,7 +29,7 @@ public class HttpInvokerConfig {
         return httpInvokerServiceExporter;
     }
 
-    @Bean
+    @Bean//url映射，指向服务层开放口
     public SimpleUrlHandlerMapping simpleUrlHandlerMapping(){
         SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
         simpleUrlHandlerMapping.setOrder(0);
