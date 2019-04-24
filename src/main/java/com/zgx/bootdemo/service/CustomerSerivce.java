@@ -1,6 +1,7 @@
 package com.zgx.bootdemo.service;
 
 import com.zgx.bootdemo.entity.Customer;
+import com.zgx.bootdemo.entity.KeywordPage;
 import com.zgx.bootdemo.entity.Page;
 
 import java.util.List;
@@ -18,21 +19,19 @@ public interface CustomerSerivce {
      * @description 根据主键查询单个用户
      *
      * @param custCode 1
-     * @return : com.zgx.bootdemo.entity.Customer
+     * @return : com.zgx.bootdemo.entity.CustomerDTO
      */
-    Customer read(String custCode) throws Exception;
+    Customer read(Long custCode) throws Exception;
 
     /**
      * @author zhouguixing
-     * @date 2019/4/22 9:47
+     * @date 2019/4/24 15:36
      * @description 按关键词（代码、助记码、名称）分页查询
      *
-     * @param keyword 1
-     * @param offset 2
-     * @param limit 3
-     * @return : com.zgx.bootdemo.entity.Page<com.zgx.bootdemo.entity.Customer>
+     * @param keywordPage 1
+     * @return : com.zgx.bootdemo.entity.Page<com.zgx.bootdemo.entity.CustomerDTO>
      */
-    Page<Customer> listPage(String keyword,int offset,int limit,String orderKey);
+    Page<Customer> listPage(KeywordPage keywordPage);
 
 
     /**
@@ -53,7 +52,7 @@ public interface CustomerSerivce {
      * @param custCode 1
      * @return : void
      */
-    void delete(String custCode) throws Exception;
+    void delete(Long custCode) throws Exception;
 
     /**
      * @author zhouguixing

@@ -1,14 +1,14 @@
 package com.zgx.bootdemo.controller;
 
+import com.zgx.bootdemo.controller.dto.CustomerDTO;
 import com.zgx.bootdemo.entity.Customer;
 import com.zgx.bootdemo.entity.KeywordPage;
 import com.zgx.bootdemo.entity.Page;
 import com.zgx.bootdemo.service.CustomerSerivce;
+import com.zgx.bootdemo.utils.CglibBeanCopierUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 
 /**
@@ -30,8 +30,11 @@ public class CustomerController {
      */
     @ResponseBody
     @RequestMapping(value = "/read/{customerId}",method = RequestMethod.GET)
-    public Customer read(@PathVariable("customerId")String customerId) throws Exception {
-        return customerSerivce.read(customerId);
+    public CustomerDTO read(@PathVariable("customerId")Long customerId) throws Exception {
+        Customer read = customerSerivce.read(customerId);
+        CustomerDTO customerDTO = new CustomerDTO();
+        CglibBeanCopierUtil.copyProperties(read, customerDTO);
+        return customerDTO;
     }
 
     /**
@@ -40,27 +43,17 @@ public class CustomerController {
      * @description 根据关键字、分页信息（页码、页面大小），查询客户列表
      *
      * @param keywordPage 1
-     * @return : com.zgx.bootdemo.entity.Page<com.zgx.bootdemo.entity.Customer>
+     * @return : com.zgx.bootdemo.entity.Page<com.zgx.bootdemo.entity.CustomerDTODTO>
      */
     @ResponseBody
     @RequestMapping(value = "/listPage",method = RequestMethod.POST)
-    public Page<Customer> listPage(@RequestBody KeywordPage keywordPage) {
-        String keyword = keywordPage.getKeyword();
-        Page page = keywordPage.getPage();
-        int offset =0;
-        int limit = 10;
-        String orderKey = "";
-        if (page != null) {
-            if (page.getOffset() != null)
-                offset=page.getOffset();
-            if (page.getLimit() != null)
-                limit = page.getLimit();
-            if (page.getLimit() != null)
-                limit = page.getLimit();
-            if (page.getOrderKey() != null)
-                orderKey = page.getOrderKey();
-        }
-        return customerSerivce.listPage(keyword, offset, limit,orderKey);
+    public Page<CustomerDTO> listPage(@RequestBody KeywordPage keywordPage) {
+
+        Page<Customer> page = customerSerivce.listPage(keywordPage);
+
+        Page<CustomerDTO> pageDTO = new Page<>();
+        CglibBeanCopierUtil.copyPage(page,pageDTO);
+        return pageDTO;
     }
 
     /**
@@ -70,8 +63,10 @@ public class CustomerController {
      */
     @ResponseBody
     @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public void save(@RequestBody Customer customer) {
-        customer.setCustCode(UUID.randomUUID().toString());
+    public void save(@RequestBody CustomerDTO customerDTO) {
+
+        Customer customer = new Customer();
+        CglibBeanCopierUtil.copyProperties(customerDTO,customer);
         customerSerivce.save(customer);
     }
 
@@ -82,7 +77,7 @@ public class CustomerController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete/{customerId}",method = RequestMethod.DELETE)
-    public void delete(@PathVariable("customerId")String customerId) throws Exception {
+    public void delete(@PathVariable("customerId")Long customerId) throws Exception {
         customerSerivce.delete(customerId);
     }
 
@@ -93,7 +88,9 @@ public class CustomerController {
      */
     @ResponseBody
     @RequestMapping(value = "/update",method = RequestMethod.PUT)
-    public void update(@RequestBody Customer customer) {
+    public void update(@RequestBody CustomerDTO customerDTO) {
+        Customer customer = new Customer();
+        CglibBeanCopierUtil.copyProperties(customerDTO, customer);
         customerSerivce.update(customer);
     }
 

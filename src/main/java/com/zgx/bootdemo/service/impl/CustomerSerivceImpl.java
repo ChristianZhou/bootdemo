@@ -2,6 +2,7 @@ package com.zgx.bootdemo.service.impl;
 
 import com.zgx.bootdemo.dao.CustomerDao;
 import com.zgx.bootdemo.entity.Customer;
+import com.zgx.bootdemo.entity.KeywordPage;
 import com.zgx.bootdemo.entity.Page;
 import com.zgx.bootdemo.service.CustomerSerivce;
 import org.slf4j.Logger;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service(value = "customerSerivce")
+@Service
 @Transactional
 public class CustomerSerivceImpl implements CustomerSerivce {
 
@@ -23,20 +24,18 @@ public class CustomerSerivceImpl implements CustomerSerivce {
     
 
     @Override
-    public Customer read(String custCode){
+    public Customer read(Long custCode){
         return customerDao.read(custCode);
     }
 
     @Override
-    public Page<Customer> listPage(String keyword, int offset, int limit,String orderKey) {
+    public Page<Customer> listPage(KeywordPage keywordPage) {
+        String keyword = keywordPage.getKeyword();
         Long total = customerDao.count(keyword);
-        List list = customerDao.listPage(keyword, offset, limit,orderKey);
-        Page<Customer> page = new Page<>();
+        List list = customerDao.listPage(keywordPage);
+        Page<Customer> page = keywordPage.getPage();
         page.setList(list);
-        page.setOffset(offset);
-        page.setLimit(limit);
         page.setTotalSize(total);
-        page.setOrderKey(orderKey);
         return page;
     }
 
@@ -51,11 +50,12 @@ public class CustomerSerivceImpl implements CustomerSerivce {
     }
 
     @Override
-    public void delete(String customerId) {
+    public void delete(Long customerId) {
         try {
             customerDao.delete(customerId);
         } catch (RuntimeException e) {
             logger.error("--------------------删除客户出现异常--------------------");
+            e.printStackTrace();
             throw new RuntimeException();
         }
     }
@@ -66,6 +66,7 @@ public class CustomerSerivceImpl implements CustomerSerivce {
             customerDao.update(customer);
         } catch (RuntimeException e) {
             logger.error("--------------------修改客户信息出现异常--------------------");
+            e.printStackTrace();
             throw new RuntimeException();
         }
     }

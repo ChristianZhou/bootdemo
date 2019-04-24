@@ -1,4 +1,4 @@
-package com.zgx.bootdemo.entity;
+package com.zgx.bootdemo.controller.dto;
 
 import java.io.Serializable;
 import java.util.List;

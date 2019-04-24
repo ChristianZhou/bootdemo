@@ -17,9 +17,9 @@ public interface BankDao{
      * @description 根据主键查询银行信息
      *
      * @param id 1
-     * @return : com.zgx.bootdemo.entity.Bank
+     * @return : com.zgx.bootdemo.entity.BankDTO
      */
-    Bank read(String id) throws RuntimeException;
+    Bank read(Long id) throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -48,7 +48,7 @@ public interface BankDao{
      * @param bankCode 1
      * @return : void
      */
-    void delete( String bankCode) throws RuntimeException;
+    void delete( Long bankCode) throws RuntimeException;
     
     /**
      * @author zhouguixing

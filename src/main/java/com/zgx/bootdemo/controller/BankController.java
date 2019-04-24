@@ -1,13 +1,14 @@
 package com.zgx.bootdemo.controller;
 
+import com.zgx.bootdemo.controller.dto.BankDTO;
 import com.zgx.bootdemo.entity.Bank;
 import com.zgx.bootdemo.service.BankSerivce;
+import com.zgx.bootdemo.utils.CglibBeanCopierUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 
 /**
@@ -25,7 +26,7 @@ public class BankController {
     /**
      * @param bankCode 1
      *
-     * @return : com.zgx.bootdemo.entity.Bank
+     * @return : com.zgx.bootdemo.entity.BankDTO
      *
      * @author zhouguixing
      * @date 2019/4/17 14:45
@@ -33,8 +34,11 @@ public class BankController {
      */
     @ResponseBody
     @RequestMapping(value = "/read/{bankId}", method = RequestMethod.GET)
-    public Bank read(@PathVariable("bankId") String bankCode) {
-        return bankSerivce.read(bankCode);
+    public BankDTO read(@PathVariable("bankId") Long bankCode) {
+        Bank read = bankSerivce.read(bankCode);
+        BankDTO bankDTO = new BankDTO();
+        CglibBeanCopierUtil.copyProperties(read,bankDTO);
+        return bankDTO;
     }
 
     /**
@@ -56,7 +60,6 @@ public class BankController {
     @ResponseBody
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public void save(@RequestBody Bank bank) {
-        bank.setBankCode(UUID.randomUUID().toString());
         bankSerivce.save(bank);
     }
 
@@ -67,7 +70,7 @@ public class BankController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete/{bankId}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("bankId") String bankId) {
+    public void delete(@PathVariable("bankId") Long bankId) {
         bankSerivce.delete(bankId);
     }
 

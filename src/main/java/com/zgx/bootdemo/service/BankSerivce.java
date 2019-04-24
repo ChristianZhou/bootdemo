@@ -1,5 +1,7 @@
 package com.zgx.bootdemo.service;
 
+
+
 import com.zgx.bootdemo.entity.Bank;
 
 import java.util.List;
@@ -17,9 +19,9 @@ public interface BankSerivce {
      * @description 根据主键查询银行信息
      *
      * @param bankCode 1
-     * @return : com.zgx.bootdemo.entity.Bank
+     * @return : com.zgx.bootdemo.entity.BankDTO
      */
-    Bank read(String bankCode) ;
+    Bank read(Long bankCode) ;
 
     /**
      * @author zhouguixing
@@ -48,7 +50,7 @@ public interface BankSerivce {
      * @param bankCode 1
      * @return : void
      */
-    void delete(String bankCode);
+    void delete(Long bankCode);
 
     /**
      * @author zhouguixing

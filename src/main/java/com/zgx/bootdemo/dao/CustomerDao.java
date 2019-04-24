@@ -1,6 +1,7 @@
 package com.zgx.bootdemo.dao;
 
 import com.zgx.bootdemo.entity.Customer;
+import com.zgx.bootdemo.entity.KeywordPage;
 
 import java.util.List;
 
@@ -18,22 +19,19 @@ public interface CustomerDao {
      * @description 根据主键查询单个
      *
      * @param custCode 1
-     * @return : com.zgx.bootdemo.entity.Customer
+     * @return : com.zgx.bootdemo.entity.CustomerDTO
      */
-    Customer read(String custCode) throws RuntimeException;
+    Customer read(Long custCode) throws RuntimeException;
 
     /**
      * @author zhouguixing
-     * @date 2019/4/22 9:52
+     * @date 2019/4/24 15:40
      * @description 按关键词（代码、助记码、名称）分页查询
      *
-     * @param keyword 1
-     * @param offSet 2
-     * @param limit 3
-     * @param orderKey 4
+     * @param keywordPage 1
      * @return : java.util.List
      */
-    List listPage(String keyword,int offSet,int limit,String orderKey) throws RuntimeException;
+    List listPage(KeywordPage keywordPage) throws RuntimeException;
 
     /**
      * @author zhouguixing
@@ -63,7 +61,7 @@ public interface CustomerDao {
      * @param custCode 1
      * @return : void
      */
-    void delete(String custCode) throws RuntimeException;
+    void delete(Long custCode) throws RuntimeException;
 
     /**
      * @author zhouguixing

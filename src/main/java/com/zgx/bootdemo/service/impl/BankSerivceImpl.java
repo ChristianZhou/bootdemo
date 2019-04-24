@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service(value = "bankSerivceImpl")
+@Service
 @Transactional
 public class BankSerivceImpl implements BankSerivce {
 
@@ -21,7 +21,7 @@ public class BankSerivceImpl implements BankSerivce {
     private  BankDao bankDao;
 
     @Override
-    public Bank read(String bankCode) {
+    public Bank read(Long bankCode) {
         return bankDao.read(bankCode);
     }
 
@@ -41,7 +41,7 @@ public class BankSerivceImpl implements BankSerivce {
     }
 
     @Override
-    public void delete(String bankCode) {
+    public void delete(Long bankCode) {
         try {
             bankDao.delete(bankCode);
         } catch (Exception e) {

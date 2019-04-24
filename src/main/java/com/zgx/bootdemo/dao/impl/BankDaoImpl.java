@@ -23,7 +23,7 @@ public class BankDaoImpl implements BankDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Bank read(String id) throws RuntimeException {
+    public Bank read(Long id) throws RuntimeException {
         return sessionFactory.getCurrentSession().get(Bank.class, id);
     }
 
@@ -40,9 +40,9 @@ public class BankDaoImpl implements BankDao {
     }
 
     @Override
-    public void delete(String bankCode) throws RuntimeException {
+    public void delete(Long bankCode) throws RuntimeException {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("delete from Bank where bankCode=:bankCode ");
+        Query query = session.createQuery("delete from BankDTO where bankCode=:bankCode ");
         query.setParameter("bankCode",bankCode);
         query.executeUpdate();
     }
