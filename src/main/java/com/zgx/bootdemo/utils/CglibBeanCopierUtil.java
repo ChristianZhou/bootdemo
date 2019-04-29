@@ -1,6 +1,8 @@
 package com.zgx.bootdemo.utils;
 
+import com.zgx.bootdemo.controller.dto.BankDTO;
 import com.zgx.bootdemo.controller.dto.CustomerDTO;
+import com.zgx.bootdemo.controller.dto.CustomerTypeDTO;
 import com.zgx.bootdemo.entity.Customer;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
@@ -47,8 +49,16 @@ public class CglibBeanCopierUtil {
                     List<CustomerDTO> list = new ArrayList<>();
                     for (Object o2 : (List) value) {
                         if(o2 instanceof Customer){
+                            Customer customer = new Customer();
+                            CglibBeanCopierUtil.copyProperties(o2,customer);
                             CustomerDTO customerData = new CustomerDTO();
-                            CglibBeanCopierUtil.copyProperties(o2, customerData);
+                            BankDTO bankDTO = new BankDTO();
+                            CustomerTypeDTO customerTypeDTO = new CustomerTypeDTO();
+                            CglibBeanCopierUtil.copyProperties(customer.getBank() ==null?new BankDTO():customer.getBank(), bankDTO);
+                            CglibBeanCopierUtil.copyProperties(customer.getCustomerType()==null?new CustomerDTO():customer.getCustomerType(),customerTypeDTO);
+                            CglibBeanCopierUtil.copyProperties(customer, customerData);
+                            customerData.setBank(bankDTO);
+                            customerData.setCustomerType(customerTypeDTO);
                             list.add((customerData));
                         }
                     }

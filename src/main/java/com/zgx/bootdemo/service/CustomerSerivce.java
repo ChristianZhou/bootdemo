@@ -33,6 +33,27 @@ public interface CustomerSerivce {
      */
     Page<Customer> listPage(KeywordPage keywordPage);
 
+    /*
+     * @author zhouguixing
+     * @date 2019/4/27 11:15
+     * @description  按照客户类型查询
+     *
+     * @param custTypeCode 1
+     * @return : java.util.List
+     */
+    List listByType(Long custTypeCode);
+
+
+    /*
+     * @author zhouguixing
+     * @date 2019/4/28 19:09
+     * @description 根据客户类别、关键字查询
+     *
+     * @param custTypeCode 1
+     * @param keyword 2
+     * @return : java.util.List
+     */
+    List listByTypeAndKeyword(Long custTypeCode,String keyword);
 
     /**
      * @author zhouguixing

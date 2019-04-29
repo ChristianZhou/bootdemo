@@ -1,7 +1,9 @@
 package com.zgx.bootdemo.config;
 
+import com.zgx.bootdemo.entity.CustomerType;
 import com.zgx.bootdemo.service.BankSerivce;
 import com.zgx.bootdemo.service.CustomerSerivce;
+import com.zgx.bootdemo.service.CustomerTypeService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
@@ -27,6 +29,14 @@ public class HttpInvokerConfig {
         HttpInvokerServiceExporter customerSerivceImplExporter = new HttpInvokerServiceExporter();
         customerSerivceImplExporter.setService(customerSerivce);
         customerSerivceImplExporter.setServiceInterface(CustomerSerivce.class);
+        return customerSerivceImplExporter;
+    }
+
+    @Bean("/customerTypeService")
+    public HttpInvokerServiceExporter customerServiceExporter(CustomerTypeService customerSerivce) {
+        HttpInvokerServiceExporter customerSerivceImplExporter = new HttpInvokerServiceExporter();
+        customerSerivceImplExporter.setService(customerSerivce);
+        customerSerivceImplExporter.setServiceInterface(CustomerTypeService.class);
         return customerSerivceImplExporter;
     }
 }

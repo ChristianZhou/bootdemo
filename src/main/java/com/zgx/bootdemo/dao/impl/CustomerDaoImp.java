@@ -1,6 +1,7 @@
 package com.zgx.bootdemo.dao.impl;
 
 import com.zgx.bootdemo.dao.CustomerDao;
+import com.zgx.bootdemo.entity.Bank;
 import com.zgx.bootdemo.entity.Customer;
 import com.zgx.bootdemo.entity.KeywordPage;
 import com.zgx.bootdemo.entity.Page;
@@ -56,12 +57,40 @@ public class CustomerDaoImp implements CustomerDao {
             criteria.addOrder(sortBy>0?Order.asc(sortField):Order.desc(sortField));
         }
         criteria.add(dis).setFirstResult(offset).setMaxResults(limit);
+        List list = criteria.list();
+        return list;
+    }
+
+
+    public List listByType(Long custTypeCode)  throws RuntimeException{
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Customer.class);
+        if(custTypeCode!=null)
+            criteria.add(Restrictions.eq("customerType.custTypeCode",custTypeCode));
+        return criteria.list();
+    }
+
+    @Override
+    public List listByTypeAndKeyword(Long custTypeCode, String keyword) throws RuntimeException {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Customer.class);
+        if(custTypeCode!=null)
+            criteria.add(Restrictions.eq("customerType.custTypeCode",custTypeCode));
+        Disjunction dis = Restrictions.disjunction();
+        dis.add(Restrictions.sqlRestriction("CAST(CUST_CODE AS CHAR) like ?", keyword, StandardBasicTypes.STRING));
+//        dis.add(Restrictions.like("custCode",String.valueOf(keyword), MatchMode.ANYWHERE));
+        dis.add(Restrictions.like("custName",keyword, MatchMode.ANYWHERE));
+        dis.add(Restrictions.like("mnemonicCode",keyword, MatchMode.ANYWHERE));
+        criteria.add(dis);
         return criteria.list();
     }
 
     @Override
     public void save(Customer customer)  throws RuntimeException{
         Session session = sessionFactory.getCurrentSession();
+        if (customer.getBank() == null||customer.getBank().getBankCode()==null) {
+            Bank bank = new Bank();
+            bank.setBankCode(0L);
+            customer.setBank(bank);
+        }
         session.save(customer);
     }
 

@@ -40,6 +40,16 @@ public class CustomerSerivceImpl implements CustomerSerivce {
     }
 
     @Override
+    public List listByType(Long custTypeCode) {
+        return customerDao.listByType(custTypeCode);
+    }
+
+    @Override
+    public List listByTypeAndKeyword(Long custTypeCode, String keyword) {
+        return customerDao.listByTypeAndKeyword(custTypeCode,keyword);
+    }
+
+    @Override
     public void save(Customer customer) {
         try {
             customerDao.save(customer);

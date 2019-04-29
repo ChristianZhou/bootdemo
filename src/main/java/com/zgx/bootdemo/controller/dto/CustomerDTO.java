@@ -16,7 +16,6 @@ import java.io.Serializable;
 public class CustomerDTO implements Serializable {
     private Long custCode;//主键、客户代码
     private String setSettlementMethodCode;//结算方式
-    private String cusCustTypeCode;//客户类型
     private String custName;//客户名称
     private String mnemonicCode;//助记码
     private String tel;//电话
@@ -27,9 +26,10 @@ public class CustomerDTO implements Serializable {
     private String postcode;//邮编
     private String bankAccount;//银行账号
     private Integer tag;//启用标记
+    private BankDTO bank;//银行
+    private CustomerTypeDTO customerType;//银行
     @JsonFormat(pattern = "yyyyMMdd", timezone = "GMT+8")
     private java.sql.Date settlementDate;//结算日期
     private java.sql.Date birthday;//生日
     private java.sql.Date monthlySettlementDate;//月结日期
-    private BankDTO bank;//银行
 }

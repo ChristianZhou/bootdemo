@@ -2,6 +2,8 @@ package com.zgx.bootdemo.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,8 +21,6 @@ public class Customer implements Serializable {
     @GeneratedValue
     private Long custCode;//主键、客户代码
     @Column
-    private String setSettlementMethodCode;//结算方式
-    private String cusCustTypeCode;//客户类型
     private String custName;//客户名称
     private String mnemonicCode;//助记码
     private String tel;//电话
@@ -31,17 +31,29 @@ public class Customer implements Serializable {
     private String postcode;//邮编
     private String bankAccount;//银行账号
     private Integer tag;//启用标记
+    private String setSettlementMethodCode;//结算方式
     @Column
     @JsonFormat(pattern = "yyyyMMdd", timezone = "GMT+8")
     private java.sql.Date settlementDate;//结算日期
     private java.sql.Date birthday;//生日
     private java.sql.Date monthlySettlementDate;//月结日期
 
-
     @ManyToOne
     @JoinColumn(name = "BAN_BANK_CODE")
+    @NotFound(action = NotFoundAction.IGNORE)
     private Bank bank;//银行
+    @ManyToOne
+    @JoinColumn(name = "CUS_CUST_TYPE_CODE")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private CustomerType customerType;//客户类型
 
+    public CustomerType getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
+    }
 
     public Long getCustCode() {
         return custCode;
@@ -66,16 +78,6 @@ public class Customer implements Serializable {
     public void setSetSettlementMethodCode(String setSettlementMethodCode) {
         this.setSettlementMethodCode = setSettlementMethodCode;
     }
-
-
-    public String getCusCustTypeCode() {
-        return cusCustTypeCode;
-    }
-
-    public void setCusCustTypeCode(String cusCustTypeCode) {
-        this.cusCustTypeCode = cusCustTypeCode;
-    }
-
 
     public String getCustName() {
         return custName;

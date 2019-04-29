@@ -14,7 +14,7 @@ public class Page<T> implements Serializable {
     private Long totalSize;//总记录数
     private List<T> list;//列表
     private String sortField;//排序字段
-    private Integer sortBy;//1（从大到小），-1（从小到大）
+    private Integer sortBy;//1（正序），-1（倒序）
 
     public Integer getSortBy() {
         return sortBy;

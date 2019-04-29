@@ -1,11 +1,13 @@
 package com.zgx.bootdemo.entity;
 
+import java.io.Serializable;
+
 /**
  * @author zhouguixing
  * @date 2019/4/18 13:11
  * @description 根据关键字查询、分页前端实体类
  */
-public class KeywordPage {
+public class KeywordPage implements Serializable {
     private String keyword;//关键字
     private Page page;//分页实体类
 

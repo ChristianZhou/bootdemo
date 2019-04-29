@@ -5,25 +5,24 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "customer_type")
-public class CustomerType {
+public class CustomerType implements Serializable {
 
   @Id
-  private String custTypeCode;
+  private Long custTypeCode;
   @Column
   private String custTypeName;
 
-
-  public String getCustTypeCode() {
+  public Long getCustTypeCode() {
     return custTypeCode;
   }
 
-  public void setCustTypeCode(String custTypeCode) {
+  public void setCustTypeCode(Long custTypeCode) {
     this.custTypeCode = custTypeCode;
   }
-
 
   public String getCustTypeName() {
     return custTypeName;

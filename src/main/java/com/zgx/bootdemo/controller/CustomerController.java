@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+
 
 /**
  * @author zhouguixing
@@ -47,13 +49,20 @@ public class CustomerController {
      */
     @ResponseBody
     @RequestMapping(value = "/listPage",method = RequestMethod.POST)
-    public Page<CustomerDTO> listPage(@RequestBody KeywordPage keywordPage) {
+    public Page listPage(@RequestBody KeywordPage keywordPage) {
 
         Page<Customer> page = customerSerivce.listPage(keywordPage);
 
         Page<CustomerDTO> pageDTO = new Page<>();
         CglibBeanCopierUtil.copyPage(page,pageDTO);
         return pageDTO;
+    }
+
+    public static void main(String[] args) {
+        Page<Customer> page = new Page<>();
+
+
+
     }
 
     /**
