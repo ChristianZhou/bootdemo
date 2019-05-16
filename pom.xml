@@ -15,118 +15,17 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
+
         <java.version>1.8</java.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+
+        <maven.compiler.target>1.8</maven.compiler.target>
+
     </properties>
 
-    <!--    <dependencies>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.boot</groupId>-->
-    <!--            <artifactId>spring-boot-starter</artifactId>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>mysql</groupId>-->
-    <!--            <artifactId>mysql-connector-java</artifactId>-->
-    <!--            <scope>runtime</scope>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.projectlombok</groupId>-->
-    <!--            <artifactId>lombok</artifactId>-->
-    <!--            <optional>true</optional>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.boot</groupId>-->
-    <!--            <artifactId>spring-boot-starter-test</artifactId>-->
-    <!--            <scope>test</scope>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.data</groupId>-->
-    <!--            <artifactId>spring-data-jpa</artifactId>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.boot</groupId>-->
-    <!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-    <!--            <scope>compile</scope>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>com.alibaba</groupId>-->
-    <!--            <artifactId>dubbo-serialization-fastjson</artifactId>-->
-    <!--            <version>2.6.5</version>-->
-    <!--            <type>pom</type>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>junit</groupId>-->
-    <!--            <artifactId>junit</artifactId>-->
-    <!--            <version>4.12</version>-->
-    <!--            <scope>compile</scope>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.boot</groupId>-->
-    <!--            <artifactId>spring-boot-test</artifactId>-->
-    <!--            <scope>compile</scope>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework</groupId>-->
-    <!--            <artifactId>spring-test</artifactId>-->
-    <!--            <scope>compile</scope>-->
-    <!--        </dependency>-->
-
-    <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.alibaba/druid &ndash;&gt;-->
-    <!--        <dependency>-->
-    <!--            <groupId>com.alibaba</groupId>-->
-    <!--            <artifactId>druid</artifactId>-->
-    <!--            <version>1.1.16</version>-->
-    <!--        </dependency>-->
-
-
-    <!--        <dependency>-->
-    <!--            <groupId>com.google.gwt</groupId>-->
-    <!--            <artifactId>gwt-user</artifactId>-->
-    <!--            <version>2.8.2</version>-->
-    <!--            <classifier>sources</classifier>-->
-    <!--            <type>java-source</type>-->
-    <!--        </dependency>-->
-
-
-    <!--        <dependency>-->
-    <!--            <groupId>com.google.gwt</groupId>-->
-    <!--            <artifactId>gwt-servlet</artifactId>-->
-    <!--            <version>2.8.2</version>-->
-    <!--        </dependency>-->
-
-
-    <!--        <dependency>-->
-    <!--            <groupId>org.gwtwidgets</groupId>-->
-    <!--            <artifactId>gwt-sl</artifactId>-->
-    <!--            <version>0.1.4</version>-->
-    <!--            <scope>system</scope>-->
-    <!--            <systemPath>${basedir}/lib/gwt-sl-0.1.4.jar</systemPath>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>org.gwtwidgets</groupId>-->
-    <!--            <artifactId>gwt-widgets</artifactId>-->
-    <!--            <version>0.1.4</version>-->
-    <!--            <scope>system</scope>-->
-    <!--            <systemPath>${basedir}/lib/gwt-widgets-0.1.4.jar</systemPath>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.boot</groupId>-->
-    <!--            <artifactId>spring-boot-starter-web</artifactId>-->
-    <!--            <scope>compile</scope>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.boot</groupId>-->
-    <!--            <artifactId>spring-boot-starter-logging</artifactId>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.slf4j</groupId>-->
-    <!--            <artifactId>log4j-over-slf4j</artifactId>-->
-    <!--        </dependency>-->
-
-    <!--    </dependencies>-->
     <dependencies>
                 <dependency>
                     <groupId>com.alibaba</groupId>
@@ -189,6 +88,11 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
 </project>

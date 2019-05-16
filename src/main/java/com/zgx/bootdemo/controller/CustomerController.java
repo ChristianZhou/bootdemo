@@ -58,13 +58,6 @@ public class CustomerController {
         return pageDTO;
     }
 
-    public static void main(String[] args) {
-        Page<Customer> page = new Page<>();
-
-
-
-    }
-
     /**
      * @author zhouguixing
      * @date 2019/4/17 10:39
@@ -73,7 +66,6 @@ public class CustomerController {
     @ResponseBody
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public void save(@RequestBody CustomerDTO customerDTO) {
-
         Customer customer = new Customer();
         CglibBeanCopierUtil.copyProperties(customerDTO,customer);
         customerSerivce.save(customer);
